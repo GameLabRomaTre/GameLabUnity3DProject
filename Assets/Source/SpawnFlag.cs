@@ -6,6 +6,8 @@ public class SpawnFlag : MonoBehaviour {
 
     public GameObject flagPrefab;
 
+    GameManager gameManager;
+
     Transform[] spawnPoints;
 
     Vector3 lastSpawnPos;
@@ -14,9 +16,17 @@ public class SpawnFlag : MonoBehaviour {
 	void Start ()
     {
         spawnPoints = GetComponentsInChildren<Transform>();
+        gameManager = GameObject.FindGameObjectWithTag(Tag.GameManager).GetComponent<GameManager>();
 	}
 	
-    public Vector3 GetNextSpawnLocation()
+    public void SpawnNextFlag()
+    {
+        GameObject newFlag = Instantiate(flagPrefab, GetNextSpawnLocation(), Quaternion.identity);
+        // Give the new flag game manager
+
+    }
+
+    private Vector3 GetNextSpawnLocation()
     {
         Vector3 candidateSpawnPos = spawnPoints[Random.Range(0, spawnPoints.Length)].position;
 
