@@ -7,7 +7,7 @@ public class VeichleSimulation : MonoBehaviour, IVeichleControls
 {
 
     public float accelSpeed;
-    public float brakeValue;
+    public float maxBrakeValue;
     public float maxTurnAngle;
     public float turnSpeed;
 
@@ -20,7 +20,6 @@ public class VeichleSimulation : MonoBehaviour, IVeichleControls
     Transform[] anteriorWheels;
 
     float accel;
-    float brake;
     float angle;
 
 	// Use this for initialization
@@ -36,43 +35,22 @@ public class VeichleSimulation : MonoBehaviour, IVeichleControls
 
     public void Accelerate(float accelValue)
     {
-
         if (accelValue > 0)
         {
-            if (wheelsColliders[0].motorTorque <= 0)
-            {
-                accel = -accelValue * accelSpeed;
-                brake = 0;
-            }
-            else
-            {
-                accel = 0;
-                brake = brakeValue;
-            }
+            accel = -accelValue * accelSpeed;
         }
         else if(accelValue < 0)
         {
-            if (wheelsColliders[0].motorTorque >= 0)
-            {
-                accel = -accelValue * accelSpeed * 0.5f;
-                brake = 0;
-            }
-            else
-            {
-                brake = brakeValue;
-                accel = 0;
-            }
+            accel = -accelValue * accelSpeed * 0.5f;
         }
         else
         {
-            brake = 0;
             accel = 0;
         }
 
         foreach (WheelCollider wheel in wheelsColliders)
         {
             wheel.motorTorque = accel;
-            wheel.brakeTorque = brake;
         }
 
     }
@@ -109,12 +87,16 @@ public class VeichleSimulation : MonoBehaviour, IVeichleControls
 
     public void Brake(bool isBraking)
     {
-        if(isBraking)
+        float currentBrakeValue = 0;
+
+        if (isBraking)
         {
-            foreach (WheelCollider wheel in wheelsColliders)
-            {
-                wheel.brakeTorque = brakeValue;
-            }
+            currentBrakeValue = maxBrakeValue;
+        }
+
+        foreach (WheelCollider wheel in wheelsColliders)
+        {
+            wheel.brakeTorque = currentBrakeValue;
         }
     }
 
