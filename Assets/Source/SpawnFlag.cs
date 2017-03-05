@@ -22,7 +22,7 @@ public class SpawnFlag : MonoBehaviour {
     public void SpawnNextFlag()
     {
         GameObject newFlag = Instantiate(flagPrefab, GetNextSpawnLocation(), Quaternion.identity);
-        // Give the new flag game manager
+        newFlag.GetComponent<FlagTrigger>().gameManager = gameManager;        
 
     }
 
