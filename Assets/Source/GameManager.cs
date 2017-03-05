@@ -13,11 +13,18 @@ public class GameManager : MonoBehaviour {
 
     public bool disableUserInput { get; set; }
 
-    int flagTaken;
+    Dictionary<string, int> player2Score;
 
     void Start()
     {
         spawner.SpawnNextFlag();
+
+        player2Score = new Dictionary<string, int>();
+
+        foreach (string player in Tag.Players)
+        {
+            player2Score.Add(player, 0);
+        }
     }
 
 	// Update is called once per frame
@@ -43,9 +50,9 @@ public class GameManager : MonoBehaviour {
         }
     }
 
-    public void FlagTaken()
+    public void FlagTaken(string player)
     {
-        flagTaken++;
+        player2Score[player] += 1; 
         spawner.SpawnNextFlag();
     }
 
