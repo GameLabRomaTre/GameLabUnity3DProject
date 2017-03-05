@@ -11,26 +11,22 @@ public class VeichleSimulation : MonoBehaviour, IVeichleControls
     public float maxTurnAngle;
     public float turnSpeed;
 
-    public GameObject wheelModelsGo;
     public GameObject wheelColliderGo;
 
     IVeichleControls controller;
 
     WheelCollider[] wheelsColliders;
-    Transform[] anteriorWheels;
+    public Transform[] wheelsTransforms;
+    public Transform[] anteriorWheels;
 
     float accel;
     float angle;
+    float lastDirection;
 
-	// Use this for initialization
-	void Start ()
+    // Use this for initialization
+    void Start()
     {
         wheelsColliders = wheelColliderGo.GetComponentsInChildren<WheelCollider>();
-
-        anteriorWheels = new Transform[2];
-
-        anteriorWheels[0] = wheelModelsGo.transform.GetChild(0);
-        anteriorWheels[1] = wheelModelsGo.transform.GetChild(1);
     }
 
     public void Accelerate(float accelValue)
@@ -39,7 +35,7 @@ public class VeichleSimulation : MonoBehaviour, IVeichleControls
         {
             accel = -accelValue * accelSpeed;
         }
-        else if(accelValue < 0)
+        else if (accelValue < 0)
         {
             accel = -accelValue * accelSpeed * 0.5f;
         }
@@ -57,9 +53,9 @@ public class VeichleSimulation : MonoBehaviour, IVeichleControls
 
     public void Steer(float steerValue)
     {
-        if(steerValue == 0)
+        if (steerValue == 0)
         {
-            if(angle> 0)
+            if (angle > 0)
             {
                 angle -= Time.deltaTime * maxTurnAngle * turnSpeed;
                 angle = Mathf.Max(angle, 0);
@@ -77,10 +73,9 @@ public class VeichleSimulation : MonoBehaviour, IVeichleControls
             angle = Mathf.Clamp(angle, -maxTurnAngle, maxTurnAngle);
         }
 
-        for (int i = 0; i<2; i++)
+        for (int i = 0; i < 2; i++)
         {
             wheelsColliders[i].steerAngle = angle;
-            anteriorWheels[i].localRotation = Quaternion.Euler(0, angle, 0);
         }
 
     }
@@ -100,6 +95,40 @@ public class VeichleSimulation : MonoBehaviour, IVeichleControls
         }
     }
 
+    void Update()
+    {
+        // Update visual of the models
+
+        // Steer of the wheels
+        foreach(Transform wheel in anteriorWheels)
+        {
+            wheel.localRotation = Quaternion.Euler(0, angle, 0);
+        }
+
+        float carVel = Vector3.Magnitude(GetComponentInParent<Rigidbody>().velocity);
+        
+        if(accel != 0)
+        {
+            lastDirection = Mathf.Sign(-accel);
+        }
+
+        float wheelRotationY = 0;
+
+        if (Mathf.Abs(carVel) > 0.005)
+        {
+            wheelRotationY = carVel * lastDirection;
+        }
+        else
+        {
+            wheelRotationY = accel;
+        }
+
+        // Rotate the wheels
+        foreach(Transform wheel in wheelsTransforms)
+        {
+            wheel.localRotation *= Quaternion.Euler(wheelRotationY, 0, 0);
+        }
+    }
 
     // Usefull to communicate events to the Controller
     public void Notify(string message)
