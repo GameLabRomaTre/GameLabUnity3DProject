@@ -1,11 +1,19 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour {
 
     public TimerView timerView;
+    public ScoreView scoreView;
+    public GameObject endgameView;
+    
     public SpawnFlag spawner;
+
+    string player = "Player1";
+
+    string thisScenePath = "Scene/testScene";
 
     public float time;
 
@@ -34,6 +42,17 @@ public class GameManager : MonoBehaviour {
         {
             UpdateTimer();
         }
+        else
+        {
+            if(Input.GetKey(KeyCode.Return))
+            {
+                ResetGame();
+            }
+            if(Input.GetKey(KeyCode.Q))
+            {
+                Application.Quit();
+            }
+        }
     }
 
     void UpdateTimer()
@@ -52,7 +71,11 @@ public class GameManager : MonoBehaviour {
 
     public void FlagTaken(string player)
     {
-        player2Score[player] += 1; 
+        player2Score[player] += 1;
+
+        if (player == this.player)
+            scoreView.SetScore(player2Score[player]);
+
         spawner.SpawnNextFlag();
     }
 
@@ -63,10 +86,12 @@ public class GameManager : MonoBehaviour {
         Time.timeScale = 0;
 
         // Show a message when you win with the total points
+        endgameView.SetActive(true);
     }
 
     void ResetGame()
     {
         // Fai un restart della scena
-    }
+        SceneManager.LoadScene(thisScenePath, LoadSceneMode.Single);
+    } 
 }
