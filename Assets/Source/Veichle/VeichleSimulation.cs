@@ -39,11 +39,10 @@ public class VeichleSimulation : MonoBehaviour, IVeichleControls
 
         if (accelValue > 0)
         {
-            if (wheelsColliders[0].motorTorque >= 0)
+            if (wheelsColliders[0].motorTorque <= 0)
             {
-                accel = accelValue * accelSpeed;
+                accel = -accelValue * accelSpeed;
                 brake = 0;
-
             }
             else
             {
@@ -53,9 +52,9 @@ public class VeichleSimulation : MonoBehaviour, IVeichleControls
         }
         else if(accelValue < 0)
         {
-            if (wheelsColliders[0].motorTorque <= 0)
+            if (wheelsColliders[0].motorTorque >= 0)
             {
-                accel = accelValue * accelSpeed * 0.5f;
+                accel = -accelValue * accelSpeed * 0.5f;
                 brake = 0;
             }
             else
@@ -103,11 +102,20 @@ public class VeichleSimulation : MonoBehaviour, IVeichleControls
         for (int i = 0; i<2; i++)
         {
             wheelsColliders[i].steerAngle = angle;
-            anteriorWheels[i].localRotation = Quaternion.Euler(0, 0, -angle);
+            anteriorWheels[i].localRotation = Quaternion.Euler(0, angle, 0);
         }
 
+    }
 
-        Debug.Log(angle);
+    public void Brake(bool isBraking)
+    {
+        if(isBraking)
+        {
+            foreach (WheelCollider wheel in wheelsColliders)
+            {
+                wheel.brakeTorque = brakeValue;
+            }
+        }
     }
 
 

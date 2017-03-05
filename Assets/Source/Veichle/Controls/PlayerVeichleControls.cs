@@ -11,7 +11,8 @@ public class PlayerVeichleControls : VeichleControls, IVeichleControls {
     {
         Accelerate(Input.GetAxis("Accelerate"));
         Steer(Input.GetAxis("Steer"));
-	}
+        Brake(Input.GetKey(KeyCode.Space));
+    }
 
     public void Accelerate(float accelValue)
     {
@@ -29,5 +30,10 @@ public class PlayerVeichleControls : VeichleControls, IVeichleControls {
     public void Notify(string message)
     {
         // Do nothing 
+    }
+
+    public void Brake(bool isBraking)
+    {
+        veichle.Brake(isBraking);
     }
 }

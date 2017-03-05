@@ -10,5 +10,7 @@ public interface IVeichleControls {
     // Must be called every frame
     void Steer(float steerDirection);
 
+    void Brake(bool isBraking);
+
     void Notify(string message);
 }
