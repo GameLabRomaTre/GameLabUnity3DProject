@@ -3,11 +3,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerVeichleControls : VeichleControls, IVeichleControls {
+public class PlayerVeichleControls : VeichleControls, ICarControls {
 
+    CarSimulation veichle;
 
-	// MyUpdate is called once per frame
-	protected override void MyUpdate ()
+    protected override void MyStart()
+    {
+        veichle = GetComponent<CarSimulation>();
+    }
+
+    // MyUpdate is called once per frame
+    protected override void MyUpdate ()
     {
         Accelerate(Input.GetAxis("Accelerate"));
         Steer(Input.GetAxis("Steer"));
@@ -25,7 +31,6 @@ public class PlayerVeichleControls : VeichleControls, IVeichleControls {
     {
         veichle.Steer(steerDirection);
     }
-
 
     public void Notify(string message)
     {

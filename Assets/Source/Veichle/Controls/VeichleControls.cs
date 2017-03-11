@@ -4,14 +4,12 @@ using UnityEngine;
 
 public abstract class VeichleControls : MonoBehaviour {
 
-    protected VeichleSimulation veichle;
-
     GameManager gameManager;
 
     void Start()
     {
-        veichle = GetComponentInChildren<VeichleSimulation>();
         gameManager = GameObject.FindGameObjectWithTag(Tag.GameManager).GetComponent<GameManager>();
+        MyStart();
     }
 
     // Update is called once per frame
@@ -23,8 +21,7 @@ public abstract class VeichleControls : MonoBehaviour {
         }
     }
 
-    protected virtual void MyUpdate()
-    {
+    protected virtual void MyStart(){}
 
-    }
+    protected virtual void MyUpdate(){}
 }

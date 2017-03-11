@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface IVeichleControls {
+public interface ICarControls {
 
     // Must be called every frame
     void Accelerate(float accelValue);
