@@ -4,13 +4,11 @@ using UnityEngine;
 
 public class SpawnFlag : MonoBehaviour {
 
-    public GameObject flagPrefab;
+    public GameObject FlagPrefab;
 
-    GameManager gameManager;
-
-    Transform[] spawnPoints;
-
-    Vector3 lastSpawnPos;
+    private GameManager gameManager;
+    private Transform[] spawnPoints;
+    private Vector3 lastSpawnPos;
 
 	// Use this for initialization
 	void Start ()
@@ -21,7 +19,7 @@ public class SpawnFlag : MonoBehaviour {
 	
     public void SpawnNextFlag()
     {
-        GameObject newFlag = Instantiate(flagPrefab, GetNextSpawnLocation(), Quaternion.identity);
+        GameObject newFlag = Instantiate(FlagPrefab, GetNextSpawnLocation(), Quaternion.identity);
         newFlag.GetComponent<FlagTrigger>().gameManager = gameManager;        
 
     }

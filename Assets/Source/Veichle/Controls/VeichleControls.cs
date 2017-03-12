@@ -4,7 +4,7 @@ using UnityEngine;
 
 public abstract class VeichleControls : MonoBehaviour {
 
-    GameManager gameManager;
+    private GameManager gameManager;
 
     void Start()
     {
@@ -12,16 +12,16 @@ public abstract class VeichleControls : MonoBehaviour {
         MyStart();
     }
 
-    // Update is called once per frame
-    void Update ()
+    // FixedUpdate is called once every fixed framerate frame
+    void FixedUpdate ()
     {
         if(!gameManager.disableUserInput)
         {
-            MyUpdate();
+            MyFixedUpdate();
         }
     }
 
     protected virtual void MyStart(){}
 
-    protected virtual void MyUpdate(){}
+    protected virtual void MyFixedUpdate(){}
 }

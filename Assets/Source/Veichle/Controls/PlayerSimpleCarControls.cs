@@ -6,15 +6,15 @@ using UnityEngine;
 public class PlayerSimpleCarControls : VeichleControls, ISimpleCarControls
 {
 
-    SimpleCarSimulation veichle;
+    private SimpleCarSimulation Veichle;
 
     protected override void MyStart()
     {
-        veichle = GetComponent<SimpleCarSimulation>();
+        Veichle = GetComponent<SimpleCarSimulation>();
     }
 
-    // MyUpdate is called once per frame
-    protected override void MyUpdate()
+    // MyFixedUpdate is called once every fixed framerate frame
+    protected override void MyFixedUpdate()
     {
         Accelerate(Input.GetAxis("Accelerate"));
         Steer(Input.GetAxis("Steer"));
@@ -22,14 +22,14 @@ public class PlayerSimpleCarControls : VeichleControls, ISimpleCarControls
 
     public void Accelerate(float accelValue)
     {
-        veichle.Accelerate(accelValue);
+        Veichle.Accelerate(accelValue);
     }
 
     // steerValue > 0, then steer right
     // steerValue < 0, then steer left
     public void Steer(float steerDirection)
     {
-        veichle.Steer(steerDirection);
+        Veichle.Steer(steerDirection);
     }
 
 }

@@ -13,7 +13,7 @@ public class PlayerVeichleControls : VeichleControls, ICarControls {
     }
 
     // MyUpdate is called once per frame
-    protected override void MyUpdate ()
+    protected override void MyFixedUpdate ()
     {
         Accelerate(Input.GetAxis("Accelerate"));
         Steer(Input.GetAxis("Steer"));
