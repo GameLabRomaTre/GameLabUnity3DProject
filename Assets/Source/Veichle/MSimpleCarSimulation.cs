@@ -3,26 +3,32 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SimpleCarSimulation : VeichleSimulation, ISimpleCarControls
+public class MSimpleCarSimulation : MonoBehaviour
 {
 
-    public float Speed = 12f;                
+    public float Speed = 12f;
     public float TurnSpeed = 180f;
     public Transform[] wheels;
 
-    private Rigidbody m_Rigidbody;             
+    private Rigidbody m_Rigidbody;
 
     // Use this for initialization
-    void Start ()
+    void Start()
     {
         m_Rigidbody = GetComponent<Rigidbody>();
+    }
+
+    void Update()
+    {
+        Accelerate(Input.GetAxis("Accelerate"));
+        Steer(Input.GetAxis("Steer"));
     }
 
     public void Accelerate(float accelValue)
     {
         // Create a vector in the direction the car is facing with a magnitude based on the input, speed and the time between frames.
         Vector3 movement = transform.forward * accelValue * Speed * Time.fixedDeltaTime;
-       
+
         // Apply this movement to the rigidbody's position.
         m_Rigidbody.MovePosition(m_Rigidbody.position + movement);
 
@@ -50,3 +56,5 @@ public class SimpleCarSimulation : VeichleSimulation, ISimpleCarControls
     }
 
 }
+
+
