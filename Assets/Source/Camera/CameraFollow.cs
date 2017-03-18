@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CameraFollow : MonoBehaviour {
 
-    public float Offset;
+    public Vector3 Offset;
     public Transform Veichle;
 
     private Transform myTrasform;
@@ -17,15 +17,8 @@ public class CameraFollow : MonoBehaviour {
     }
 	
 	// Update is called once per frame
-	void Update ()
+	void FixedUpdate ()
     {
-        myTrasform.position = new Vector3(Veichle.position.x - Veichle.forward.x,
-                                          myTrasform.position.y,
-                                          Veichle.position.z - Veichle.forward.z * Offset);
-
-        myTrasform.eulerAngles = new Vector3(myTrasform.eulerAngles.x,
-                                             Veichle.eulerAngles.y,
-                                             myTrasform.eulerAngles.z);
-
+        myTrasform.position = Veichle.position + Offset;
     }
 }

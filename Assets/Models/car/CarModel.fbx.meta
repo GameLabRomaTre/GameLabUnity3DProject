@@ -15,6 +15,10 @@ ModelImporter:
     100014: Lamp
     100016: Sphere
     100018: Circle.004
+    100020: Car
+    100022: FrontWheel1
+    100024: FrontWheel2
+    100026: RearWheels
     400000: Camera
     400002: //RootNode
     400004: Circle.000
@@ -25,6 +29,10 @@ ModelImporter:
     400014: Lamp
     400016: Sphere
     400018: Circle.004
+    400020: Car
+    400022: FrontWheel1
+    400024: FrontWheel2
+    400026: RearWheels
     2300000: Circle.000
     2300002: Circle.001
     2300004: Circle.002
@@ -32,6 +40,10 @@ ModelImporter:
     2300008: Cube
     2300010: Sphere
     2300012: Circle.004
+    2300014: Car
+    2300016: FrontWheel1
+    2300018: FrontWheel2
+    2300020: RearWheels
     3300000: Circle.000
     3300002: Circle.001
     3300004: Circle.002
@@ -39,6 +51,10 @@ ModelImporter:
     3300008: Cube
     3300010: Sphere
     3300012: Circle.004
+    3300014: Car
+    3300016: FrontWheel1
+    3300018: FrontWheel2
+    3300020: RearWheels
     4300000: Circle.003
     4300002: Circle.002
     4300004: Circle.000
@@ -46,6 +62,10 @@ ModelImporter:
     4300008: Cube
     4300010: Sphere
     4300012: Circle.004
+    4300014: FrontWheel1
+    4300016: FrontWheel2
+    4300018: RearWheels
+    4300020: Car
   materials:
     importMaterials: 1
     materialName: 0
@@ -89,7 +109,7 @@ ModelImporter:
     normalSmoothAngle: 60
     normalImportMode: 0
     tangentImportMode: 3
-  importAnimation: 1
+  importAnimation: 0
   copyAvatar: 0
   humanDescription:
     serializedVersion: 2
