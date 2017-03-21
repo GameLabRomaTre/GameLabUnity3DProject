@@ -12,6 +12,7 @@ public class MSimpleCarSimulation : MonoBehaviour
     public Transform[] rearWheels;
     private Rigidbody m_Rigidbody;
     private int maxWheelsRotation = 20;//degree
+    public bool enableEngine;
     // Use this for initialization
     void Start()
     {
@@ -29,7 +30,8 @@ public class MSimpleCarSimulation : MonoBehaviour
         Vector3 movement = transform.forward * accelValue * Speed * Time.fixedDeltaTime;
 
         // Apply this movement to the rigidbody's position.
-        m_Rigidbody.MovePosition(m_Rigidbody.position + movement);
+        if(enableEngine)
+            m_Rigidbody.MovePosition(m_Rigidbody.position + movement);
 
         ////Rotation   
         // Determine the number of degrees to be turned based on the input, speed and time between frames.
@@ -39,7 +41,8 @@ public class MSimpleCarSimulation : MonoBehaviour
         Quaternion turnRotation = Quaternion.Euler(0f, turn, 0f);
 
         // Apply this rotation to the rigidbody's rotation.
-        m_Rigidbody.MoveRotation(m_Rigidbody.rotation * turnRotation);
+        if (enableEngine)
+            m_Rigidbody.MoveRotation(m_Rigidbody.rotation * turnRotation);
 
         RotateWheels(-20 * accelValue * Speed * Time.fixedDeltaTime, steerDirection * maxWheelsRotation);
     }
@@ -56,7 +59,14 @@ public class MSimpleCarSimulation : MonoBehaviour
             wheel.Rotate(new Vector3(rotationSpeed, 0, 0));
         }
     }
-
+    void OnTriggerEnter(Collider other)
+    {
+        enableEngine = true;
+    }
+    void OnTriggerExit(Collider other)
+    {
+        enableEngine = false;
+    }
 }
 
 
