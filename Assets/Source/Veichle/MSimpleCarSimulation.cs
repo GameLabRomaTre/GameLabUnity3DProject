@@ -51,12 +51,12 @@ public class MSimpleCarSimulation : MonoBehaviour
     {
         foreach (Transform wheel in frontWheels)
         {
-            wheel.Rotate(new Vector3(rotationSpeed, 0, 0));
+            wheel.Rotate(new Vector3(-rotationSpeed, 0, 0));
             wheel.localRotation = Quaternion.Euler(wheel.localRotation.x, wheel.localRotation.y + turn, wheel.localRotation.z);
         }
         foreach (Transform wheel in rearWheels)
         {
-            wheel.Rotate(new Vector3(rotationSpeed, 0, 0));
+            wheel.Rotate(new Vector3(-rotationSpeed, 0, 0));
         }
     }
     void OnTriggerEnter(Collider other)

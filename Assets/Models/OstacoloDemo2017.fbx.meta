@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: 77f453429d5a1414c80536bbaaca245e
-timeCreated: 1490478988
+guid: 6f28f76305e5e14428e219e942974e9a
+timeCreated: 1490480314
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
@@ -9,7 +9,7 @@ ModelImporter:
     400000: //RootNode
     2300000: //RootNode
     3300000: //RootNode
-    4300000: Piattaforma
+    4300000: Circle
   materials:
     importMaterials: 1
     materialName: 0
