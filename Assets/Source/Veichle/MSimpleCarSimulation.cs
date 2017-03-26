@@ -39,23 +39,24 @@ public class MSimpleCarSimulation : MonoBehaviour
             // Apply this movement to the rigidbody's position.
             m_Rigidbody.AddForce(movement * 100);
             // Apply this rotation to the rigidbody's rotation.
-            transform.RotateAround(Pivot.position, Vector3.up, turn);
+            if(accelValue != 0)
+                transform.RotateAround(Pivot.position, Vector3.up, turn);
         }
 
         // Wheel rotation animation
-        RotateWheels(-1 * (accelValue + turn) * Speed, steerDirection * maxWheelsRotation);
+        RotateWheels(accelValue != 0 ? (accelValue + turn) * Speed : 0, steerDirection * maxWheelsRotation);
     }
 
     private void RotateWheels(float rotationSpeed, float turn)
     {
         foreach (Transform wheel in FrontWheels)
         {
-            wheel.Rotate(new Vector3(-rotationSpeed, 0, 0));
+            wheel.Rotate(new Vector3(rotationSpeed, 0, 0));
             wheel.localRotation = Quaternion.Euler(wheel.localRotation.x, wheel.localRotation.y + turn, wheel.localRotation.z);
         }
         foreach (Transform wheel in RearWheels)
         {
-            wheel.Rotate(new Vector3(-rotationSpeed, 0, 0));
+            wheel.Rotate(new Vector3(rotationSpeed, 0, 0));
         }
     }
 
