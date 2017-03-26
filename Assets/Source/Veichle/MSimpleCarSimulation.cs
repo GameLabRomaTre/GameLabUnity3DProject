@@ -9,10 +9,11 @@ public class MSimpleCarSimulation : MonoBehaviour
     public Transform[] RearWheels;
     public Transform Pivot;
 
-    public bool EnableEngine;
+    public int TriggerCount = 0;
 
+    private bool engine;
     private Rigidbody m_Rigidbody;
-    private int maxWheelsRotation = 20;//degree
+    private int maxWheelsRotation = 20; //degree
 
     // Use this for initialization
     void Start()
@@ -22,6 +23,8 @@ public class MSimpleCarSimulation : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (IsOnTheGround()) EnableEngine();
+        else DisableEngine();
         MoveCar(Input.GetAxis("Accelerate"), Input.GetAxis("Steer"));
     }
 
@@ -34,17 +37,17 @@ public class MSimpleCarSimulation : MonoBehaviour
         float turn = steerDirection * TurnSpeed * Time.fixedDeltaTime;
 
         // If the engine is enabled
-        if (EnableEngine)
+        if (engine)
         {
             // Apply this movement to the rigidbody's position.
-            m_Rigidbody.AddForce(movement * 100);
+            m_Rigidbody.AddForce(movement * 1000);
             // Apply this rotation to the rigidbody's rotation.
-            if(accelValue != 0)
+            if(m_Rigidbody.velocity.x != 0 && m_Rigidbody.velocity.z != 0)
                 transform.RotateAround(Pivot.position, Vector3.up, turn);
         }
 
         // Wheel rotation animation
-        RotateWheels(accelValue != 0 ? (accelValue + turn) * Speed : 0, steerDirection * maxWheelsRotation);
+        RotateWheels((accelValue + turn) * Speed, steerDirection * maxWheelsRotation);
     }
 
     private void RotateWheels(float rotationSpeed, float turn)
@@ -61,13 +64,25 @@ public class MSimpleCarSimulation : MonoBehaviour
     }
 
     // Checks if the car is on the ground to avoid mid-air acceleration
-    void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
-        EnableEngine = true;
+        TriggerCount++;
     }
-    void OnTriggerExit(Collider other)
+    private void OnTriggerExit(Collider other)
     {
-        EnableEngine = false;
+        TriggerCount--;
+    }
+    public bool IsOnTheGround()
+    {
+        return TriggerCount != 0;
+    }
+    public void EnableEngine()
+    {
+        engine = true;
+    }
+    public void DisableEngine()
+    {
+        engine = false;
     }
 }
 

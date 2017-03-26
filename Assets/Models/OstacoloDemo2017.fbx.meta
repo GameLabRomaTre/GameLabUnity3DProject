@@ -6,9 +6,15 @@ ModelImporter:
   serializedVersion: 19
   fileIDToRecycleName:
     100000: //RootNode
+    100002: Cinema4D_Editor
+    100004: Circle
     400000: //RootNode
+    400002: Cinema4D_Editor
+    400004: Circle
     2300000: //RootNode
+    2300002: Circle
     3300000: //RootNode
+    3300002: Circle
     4300000: Circle
   materials:
     importMaterials: 1
