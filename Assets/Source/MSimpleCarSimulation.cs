@@ -11,7 +11,7 @@ public class MSimpleCarSimulation : MonoBehaviour
 
     public int TriggerCount = 0;
 
-    private bool engine;
+    public bool engine;
     private Rigidbody m_Rigidbody;
     private int maxWheelsRotation = 20; //degree
 
@@ -32,6 +32,27 @@ public class MSimpleCarSimulation : MonoBehaviour
     {
         // Create a vector in the direction the car is facing with a magnitude based on the input, speed and the time between frames.
         Vector3 movement = transform.forward * accelValue * Speed * Time.fixedDeltaTime;
+        // Determine the number of degrees to be turned based on the input, speed and time between frames.
+        float turn = steerDirection * TurnSpeed * Time.fixedDeltaTime;
+
+        // Make this into a rotation in the y axis.
+        Quaternion turnRotation = Quaternion.Euler(0f, turn, 0f);
+
+        // If the engine is enabled
+        if (engine)
+        {
+            m_Rigidbody.MovePosition(m_Rigidbody.position + movement);
+            m_Rigidbody.MoveRotation(m_Rigidbody.rotation * turnRotation);
+        }
+
+        // Wheel rotation animation
+        RotateWheels((accelValue + turn) * Speed, steerDirection * maxWheelsRotation);
+    }
+
+    public void MoveCarRigidbody(float accelValue, float steerDirection)
+    {
+        // Create a vector in the direction the car is facing with a magnitude based on the input, speed and the time between frames.
+        Vector3 movement = transform.forward * accelValue * Speed * Time.fixedDeltaTime;
 
         // Determine the number of degrees to be turned based on the input, speed and time between frames.
         float turn = steerDirection * TurnSpeed * Time.fixedDeltaTime;
@@ -42,14 +63,14 @@ public class MSimpleCarSimulation : MonoBehaviour
             // Apply this movement to the rigidbody's position.
             m_Rigidbody.AddForce(movement * 1000);
             // Apply this rotation to the rigidbody's rotation.
-            if(m_Rigidbody.velocity.x != 0 && m_Rigidbody.velocity.z != 0)
+            if (m_Rigidbody.velocity.x != 0 && m_Rigidbody.velocity.z != 0)
                 transform.RotateAround(Pivot.position, Vector3.up, turn);
         }
 
         // Wheel rotation animation
         RotateWheels((accelValue + turn) * Speed, steerDirection * maxWheelsRotation);
     }
-
+   
     private void RotateWheels(float rotationSpeed, float turn)
     {
         foreach (Transform wheel in FrontWheels)
